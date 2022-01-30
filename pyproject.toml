@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "djangauth"
+version = "0.1.0"
+description = ""
+authors = ["nuxion <nuxion@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^4.0.1"
+djangorestframework = "^3.13.1"
+django-filter = "^21.1"
+django-allauth = "^0.47.0"
+djangorestframework-simplejwt = "^5.0.0"
+PyYAML = "^6.0"
+
+[tool.poetry.dev-dependencies]
+django-stubs = "^1.9.0"
+autopep8 = "^1.6.0"
+isort = "^5.10.1"
+djangorestframework-stubs = "^1.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

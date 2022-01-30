@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<h2> Site </h2>
+{{ message }} 
+{% endblock content %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://unpkg.com/axios/dist/axios.min.js">
+</script>
+<script>
+// const axios = require('axios');
+console.log("Hello from JS");
+// Make a request for a user with a given ID
+axios.get('core/api/users/')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+</script>
+{% endblock scripts %}
