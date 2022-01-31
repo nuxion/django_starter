@@ -75,14 +75,36 @@ run:
 	# run django and vite server together 
 	python3 scripts/run.py
 
-.PHONY: docker
-docker:
+.PHONY: docker-py
+docker-py:
 	docker build -t ${DOCKERID}/${PROJECTNAME} .
+
+.PHONY: docker-js
+docker-js:
+	docker build -f Dockerfile.nodejs . -t ${DOCKERID}/nodejs-builder
+
 
 .PHONY: docker-local
 docker-local:
 	docker build -t ${DOCKERID}/${PROJECTNAME} .
 	docker tag ${DOCKERID}/${PROJECTNAME} ${DOCKERID}/${PROJECTNAME}:$(VERSION)
+
+.PHONY: docker-env
+docker-env:
+	# docker run --rm -it --network host --env-file=.env.docker -v ${PWD}:/app ${REGISTRY}/${DOCKERID}/${PROJECTNAME}:${VERSION} bash
+	docker run --rm -it --network host --env-file=.env.docker  -v ${PWD}:/app ${DOCKERID}/${PROJECTNAME} bash
+
+.PHONY: build-vite
+build-vite:
+	docker run --rm -v ${PWD}/theme/static/dist/:/app/theme/static/dist nodejs-builder
+
+.PHONY: build-collect
+build-collect:
+	mkdir -p ${PWD}/dist
+	docker run --rm -v ${PWD}/dist:/app/dist --env-file=.env.example ${DOCKERID}/${PROJECTNAME} python3 manage.py collectstatic --no-input
+
+.PHONY: build
+build: docker-py docker-js build-vite build-collect
 
 .PHONY: release
 release:
@@ -93,10 +115,6 @@ release:
 publish:
 	python3 scripts/publish.py
 
-.PHONY: docker-env
-docker-env:
-	# docker run --rm -it --network host --env-file=.env.docker -v ${PWD}:/app ${REGISTRY}/${DOCKERID}/${PROJECTNAME}:${VERSION} bash
-	docker run --rm -it --network host --env-file=.env.docker  -v ${PWD}:/app ${DOCKERID}/${PROJECTNAME} bash
 
 .PHONY: tag
 tag:

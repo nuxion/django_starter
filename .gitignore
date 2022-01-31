@@ -389,3 +389,4 @@ tags
 .env.docker
 node_modules
 theme/static/dist/
+django.log

@@ -24,9 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = False
+#if os.environ.get("DEBUG"):
+#    DEBUG = True
+DEBUG=False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", ".localhost", '[::1]']
 
 
 AUTHENTICATION_BACKENDS = [
@@ -141,6 +144,8 @@ DJANGO_VITE_ASSETS_PATH =  BASE_DIR / "theme/static/dist"
 DJANGO_VITE_DEV_MODE = DEBUG
 
 STATIC_URL = 'static/'
+STATIC_ROOT = "dist"
+
 # Include DJANGO_VITE_ASSETS_PATH into STATICFILES_DIRS to be copied inside
 # when run command python manage.py collectstatic
 STATICFILES_DIRS = [DJANGO_VITE_ASSETS_PATH]
@@ -230,5 +235,38 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'home': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
 }
 

@@ -27,4 +27,4 @@ WORKDIR /app
 ENV PATH=$PATH:/home/app/.local/bin
 ENV PYTHONPATH=/app
 # RUN python /app/setup.py install --user
-# CMD ["python3", "run.py"]
+CMD ["gunicorn", "-c", "/app/gunicorn_conf.py", "djangauth.wsgi"]

@@ -20,12 +20,47 @@ From the javascript perspective, the library could use Session type authenticati
 The project includes their own User model extended from AbstractUser. 
 Email is used as unique identifier for a user.
 
+## Dir structure
+
+- `core`: core to the app like the auth system, REST configuration, admin, and so on
+- `theme`: related to javascript ecosystem and tailwdin
+- `home`: `_base.html` layout and landing page
+- `dist`: collected static content from django and vite build process
+
+## Build
+
+As simple shortcut:
+
+```
+make build
+```
+
+The build process has several steps:
+1. Built a python docker image, it is prepared to run django with gunicorn
+2. Built a nodejs docker image to compile javascripts files and tailwind styles
+3. Collect static content in the `dist` folder
+
+## Devlopment server
+
+Two process are needed: Django runserver and vite dev server. 
+
+Running manually:
+In two different terminals you should run:
+
+`python manage.py runserver` 
+
+`yarn dev`
+
+Or only in one terminal:
+`python3 src/run.py`
+
+
 ## TODO
 
 - [ ] Testing
 - [ ] CORS Headers
 - [ ] CSRF requests from javascript
-- [ ] Docker Production deploy
+- [x] Docker Production deploy
 
 
 
