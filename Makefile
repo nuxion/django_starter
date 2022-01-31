@@ -62,9 +62,18 @@ test:
 install:
 	poetry install --dev
 
+.PHONY: docker-run
+docker-run:
+	docker run --rm -p 127.0.0.1:8100:8000 -p 127.0.0.1:8110:8001 ${DOCKERID}/${PROJECTNAME}
+
+.PHONY: runserver
+runserver:
+	python3 manage.py runserver
+
 .PHONY: run
 run:
-	docker run --rm -p 127.0.0.1:8100:8000 -p 127.0.0.1:8110:8001 ${DOCKERID}/${PROJECTNAME}
+	# run django and vite server together 
+	python3 scripts/run.py
 
 .PHONY: docker
 docker:

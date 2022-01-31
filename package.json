@@ -1,0 +1,21 @@
+{
+  "name": "djangauth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nuxion/django_starter.git",
+  "author": "nuxion <nuxion@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.4.0",
+    "autoprefixer": "^10.4.2",
+    "eslint": "^8.8.0",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.18",
+    "vite": "^2.7.13"
+  }
+}

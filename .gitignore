@@ -387,3 +387,5 @@ tags
 # End of https://www.toptal.com/developers/gitignore/api/python,node,vim,emacs,visualstudiocode
 .envrc
 .env.docker
+node_modules
+theme/static/dist/
