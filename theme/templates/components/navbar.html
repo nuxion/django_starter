@@ -1,0 +1,100 @@
+<!-- Navbar goes here -->
+<nav class="bg-white shadow-lg">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex justify-between">
+      <div class="flex space-x-7">
+        <div>
+          <!-- Website Logo -->
+          <a href="#" class="flex items-center py-4 px-2">
+            <img src="logo.png" alt="Logo" class="h-8 w-8 mr-2">
+            <span class="font-semibold text-gray-500 text-lg">Navigation</span>
+          </a>
+        </div>
+        <!-- Primary Navbar items -->
+        <div class="hidden md:flex items-center space-x-1">
+          {% for m in menu %}
+            <a href="{{ m.url }}" class="py-4 px-2 text-gray-500 font-semibold hover:text-indigo-500 transition duration-300">{{ m.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Secondary Navbar items -->
+      <div class="hidden md:flex items-center space-x-3 " >
+        {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'account_logout' %}">
+            {% csrf_token %} 
+            <button type="submit" class="py-2 px-7 font-medium text-white bg-indigo-500 rounded hover:bg-indigo-400 transition duration-300">Log Out</button>
+        </form>
+        <!-- a href="{% url 'account_logout' %}" class="py-2 px-7 font-medium text-white bg-indigo-500 rounded hover:bg-indigo-400 transition duration-300">Log Out</a-->
+        {% else %}
+        <a href="{% url 'account_login' %}" class="py-2 px-7 font-medium text-white bg-indigo-500 rounded hover:bg-indigo-400 transition duration-300">Sign In</a>
+        {% endif %}
+      </div>
+      <!-- Mobile menu button -->
+      <div class="md:hidden flex items-center">
+      <button
+        class="mobile-menu-button w-10 h-10
+                relative focus:outline-none bg-transparent dark:bg-black
+                  self-end inline-block md:hidden z-30"
+        >
+        <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
+        <span
+          id="agButtonSpanUp"
+          aria-hidden="true"
+          class="block absolute h-0.5 w-5 bg-current dark:bg-white transform transition duration-500 ease-in-out -translate-y-1.5"
+        ></span>
+        <span
+          id="agButtonSpanMiddle"
+          aria-hidden="true"
+          class="block absolute h-0.5 w-5 bg-current dark:bg-white transform transition duration-500 ease-in-out"
+        ></span>
+          <span
+          id="agButtonSpanBottom"
+          aria-hidden="true"
+          class="block absolute h-0.5 w-5 bg-current dark:bg-white transform transition duration-500 ease-in-out translate-y-1.5"
+        ></span>           
+      </div>
+    </button>
+    </div>
+    </div>
+  </div>
+  <!-- mobile menu -->
+  <div class="hidden mobile-menu">
+    <ul class="">
+      {% for m in menu %}
+      <!-- li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-indigo-500 font-semibold">Home</a></li-->
+      <li><a href="{{m.url}}" class="block text-sm px-2 py-4 hover:bg-indigo-500 transition duration-200">{{m.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</nav>
+<script>
+    const btn = document.querySelector("button.mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
+    const upper = document.getElementById("agButtonSpanUp");
+    const middle = document.getElementById("agButtonSpanMiddle");
+    const down = document.getElementById("agButtonSpanBottom");
+
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+      if (menu.classList.contains('hidden')){
+        // Is close
+        upper.classList.remove("rotate-45")
+        upper.classList.add("-translate-y-1.5")
+
+        middle.classList.remove("opacity-0")
+
+        down.classList.remove("-rotate-45")
+        down.classList.add("translate-y-1.5")
+      } else {
+        // Is open
+        upper.classList.remove("-translate-y-1.5")
+        upper.classList.add("rotate-45")
+
+        middle.classList.add("opacity-0")
+
+        down.classList.remove("translate-y-1.5")
+        down.classList.add("-rotate-45")
+      }
+    });
+</script>
