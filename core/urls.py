@@ -27,7 +27,7 @@ urlpatterns = [
     ), name='swagger-ui'),
 
     # accounts django-allauth
-    path('accounts/profile/', views.profile),
+    path('accounts/profile/', views.profile, name="account_profile"),
     path('accounts/', include('allauth.urls')),
 
     # jwt-token django rest-framework-simplejwt

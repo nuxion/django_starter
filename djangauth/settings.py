@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-#if os.environ.get("DEBUG"):
-#    DEBUG = True
-DEBUG=False
+DEBUG = False
+if os.environ.get("DEBUG"):
+    DEBUG = True
+# DEBUG=False
 
 ALLOWED_HOSTS = ["127.0.0.1", ".localhost", '[::1]']
 
@@ -190,11 +190,13 @@ AUTH_USER_MODEL = "core.CustomUser"
 
 # ACCOUNT_AUTHENTICATION_METHOD = "email"
 # debug
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = "account_profile"
 
 
 REST_FRAMEWORK = {

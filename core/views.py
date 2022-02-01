@@ -1,5 +1,7 @@
 from django.contrib.auth.models import Group
 from rest_framework import permissions, viewsets
+from django.http import HttpResponse
+from django.shortcuts import render
 
 from .models import CustomUser
 from .serializers import GroupSerializer, UserSerializer
@@ -29,5 +31,5 @@ def profile(request):
     if request.user.is_authenticated:
         username = request.user.email
 
-    return HttpResponse(username)
+    return render(request, "core/profile.html", {"message": username })
 
