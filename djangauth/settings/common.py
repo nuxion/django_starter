@@ -14,8 +14,13 @@ from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# An extra parent is added because settings are inside another folder.
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+print("BASE_DIR: ", BASE_DIR)
 
+DEBUG = False
+if os.environ.get("DEBUG"):
+    DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -24,12 +29,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-if os.environ.get("DEBUG"):
-    DEBUG = True
-# DEBUG=False
-
-ALLOWED_HOSTS = ["127.0.0.1", ".localhost", '[::1]']
 
 
 AUTHENTICATION_BACKENDS = [
@@ -96,18 +95,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangauth.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -141,9 +128,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 DJANGO_VITE_ASSETS_PATH =  BASE_DIR / "theme/static/dist"
-DJANGO_VITE_DEV_MODE = DEBUG
+# DJANGO_VITE_DEV_MODE = DEBUG
 
 STATIC_URL = 'static/'
 STATIC_ROOT = "dist"
@@ -192,8 +178,6 @@ AUTH_USER_MODEL = "core.CustomUser"
 
 # ACCOUNT_AUTHENTICATION_METHOD = "email"
 # debug
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
@@ -240,37 +224,3 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'django.log',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'home': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-    }
-}
-
